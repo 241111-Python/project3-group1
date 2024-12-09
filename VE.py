@@ -36,6 +36,8 @@ def change_column_header(colomns):
 # convert date to year format
 def date_to_year_format(df, date_column):
     # df[date_column] = pd.to_datetime(df[date_column], format='%Y', errors='coerce')
+    
+
     df[date_column] = pd.to_datetime(df[date_column], errors='coerce')
 
     df[date_column] = df[date_column].dt.year
@@ -43,6 +45,7 @@ def date_to_year_format(df, date_column):
 
 # check if 'Year/Date' column  convert it to year format
 def check_format_date_column(df):
+    df['Year/Date'] = df['Year/Date'].astype(str)
     if 'Year/Date' in df.columns:
         df = date_to_year_format(df, 'Year/Date')
     return df
