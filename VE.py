@@ -27,8 +27,9 @@ date_patterns = re.compile(r'(date|year)', re.IGNORECASE)
 def change_column_header(colomns):
     changed = []
     for item in colomns:
-        if date_patterns.search(item):
+        if date_patterns.search(item) and 'Year/Date' not in changed:
             changed.append('Year/Date') 
+            # break  
         else:
             changed.append(item)
     return changed
@@ -117,8 +118,10 @@ print("Data correlation tool!")
 # Load data
 path1 = input("Enter the path to dataset 1: ")
 path2 = input("Enter the path to dataset 2: ")
-df1 = pd.read_csv(path1)
-df2 = pd.read_csv(path2)
+# df1 = pd.read_csv(path1)
+# df2 = pd.read_csv(path2)
+df1 = pd.read_csv(path1, encoding='ISO-8859-1')
+df2 = pd.read_csv(path2, encoding='ISO-8859-1')
 
 # Rename columns
 df1.columns = change_column_header(df1.columns)
