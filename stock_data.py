@@ -20,7 +20,7 @@ df_s = df_s.drop("Date", axis=1).groupby("Year").mean()
 # Merge
 merged_df = pd.merge(df_c, df_s, on="Year")
 
-# Plot
+# Setup plotting
 attr1 = "Data.Rates.Property.All"
 attr2 = "Adjusted Close"
 color1 = "Red"
@@ -31,16 +31,19 @@ attribute1 = merged_df[attr1]
 attribute2 = merged_df[attr2]
 label1 = "US Crime Rate"
 label2 = stock
+correlation = merged_df[attr1].corr(merged_df[attr2])
+
+# Plot and save fig
 fig, ax1 = plt.subplots(figsize=(12, 6))
 ax1.set_xlabel("Year")
 ax1.set_ylabel(label1 + " (per 100,000 population)", color=color1)
 ax1.plot(years, attribute1, label=label1, color=color1, marker=None, linestyle="-")
 ax1.tick_params(axis="y", labelcolor=color1)
 ax2 = ax1.twinx()
-ax2.set_ylabel(label2+ " (avg. adjusted closing price)", color=color2)
+ax2.set_ylabel(label2 + " (avg. adjusted closing price in USD)", color=color2)
 ax2.plot(years, attribute2, label=label2, color=color2, marker=None, linestyle="-")
 ax2.tick_params(axis="y", labelcolor=color2)
-fig.suptitle(f"{label1} vs. {label2}")
+fig.suptitle(f"{label1} vs. {label2}\nr = {round(correlation, 2)}")
 fig.tight_layout()
 
 plt.savefig(os.path.join(figures, f"{attr1}_vs_{stock}.png"))

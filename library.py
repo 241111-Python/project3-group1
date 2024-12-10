@@ -26,6 +26,3 @@ def load_crime_df(include_states=False):
         df = df[~df["State"].str.contains("United States")].reset_index(drop=True)
 
     return df
-
-
-print(load_crime_df(include_states=True).groupby("Year")["Data.Population"].sum())
