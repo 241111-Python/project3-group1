@@ -9,29 +9,36 @@ df2 = pd.read_csv("Datasets_DF/US_Election_dataset_v1.csv")
 merged = df.merge(df2, how="left", on="Year")
 merged.rename(columns=lambda x: x.strip(), inplace=True)
 
-# Add a new column to identify election years (presidential election years)
 merged['Election_Year'] = merged['Year'] % 4 == 0
 
-# Print the updated DataFrame
-print(merged[['Year', 'Election_Year']].head())
+merged['Winning_Party_Numerical'] = merged['Winning_Party'].map({' D': 1, ' R': 0})
 
-print(merged[['Data.Rates.Violent.All', 'Winning_Party']].isnull().sum())
+print(merged['Winning_Party'].unique())
+print(merged.head(15))
 
-# Plot the boxplot for violent crime rates by winning party
-# sns.boxplot(data=merged, x='Winning_Party', y='Data.Rates.Violent.All')
-# plt.title('Violent Crime Rates by Winning Party')
-# plt.show()
+corr = merged[['Data.Rates.Violent.All', 'Winning_Party_Numerical', ]].corr()
+print(corr)
 
-# Separate data by party
-democratic = merged[merged['Winning_Party'] == 'D']
-republican = merged[merged['Winning_Party'] == 'R']
+democratic = merged[merged['Winning_Party_Numerical'] == 1]
+republican = merged[merged['Winning_Party_Numerical'] == 0]
 
-# Prepare data for boxplot
 data_to_plot = [democratic['Data.Rates.Violent.All'], republican['Data.Rates.Violent.All']]
 
 # Create the boxplot
-plt.boxplot(data_to_plot, labels=['Democratic', 'Republican'])
-plt.title('Violent Crime Rates by Winning Party')
+# plt.boxplot(data_to_plot, labels=['Democratic', 'Republican'])
+# plt.title('Violent Crime Rates by Winning Party')
+# plt.ylabel('Violent Crime Rates')
+# plt.xlabel('Winning_Party')
+# plt.show()
+
+plt.figure(figsize=(10, 6))  # Adjust figure size as needed
+
+plt.plot(x='Year', y='Data.Rates.Violent.All', kind='line', label='Democratic', color='blue')
+plt.plot(x='Year', y='Data.Rates.Violent.All', kind='line', label='Republican', color='red')
+
+plt.title('Violent Crime Rates by Winning Party Over Time')
+plt.xlabel('Year')
 plt.ylabel('Violent Crime Rates')
-plt.xlabel('Winning_Party')
+plt.legend()  
+plt.grid(True) 
 plt.show()
