@@ -21,10 +21,10 @@ def get_choice(options, prompt):
 
 
 #re for find pattern
-date_patterns = re.compile(r'(date|year)', re.IGNORECASE)
+date_pattern = re.compile(r'(date|year)', re.IGNORECASE)
 
 # rename date|year columns to 'Year/Date'
-def change_column_header(colomns):
+def change_column_header(colomns, date_patterns):
     changed = []
     for item in colomns:
         if date_patterns.search(item) and 'Year/Date' not in changed:
@@ -62,14 +62,20 @@ def count_string_data(df, group_col, value_col, string):
 
 # calculate average, grouped by 'Year/Date'
 def calculate_avg(df, attribute):
+    if df[attribute].dtype == 'object':
+        df[attribute] = df[attribute].str.replace(',', '').astype(int)
     return df.groupby('Year/Date')[attribute].mean().reset_index()
 
 # calculate sum, grouped by 'Year/Date'
 def calculate_sum(df, attribute):
+    if df[attribute].dtype == 'object':
+        df[attribute] = df[attribute].str.replace(',', '').astype(int)
     return df.groupby('Year/Date')[attribute].sum().reset_index()
 
 # calculate count, grouped by 'Year/Date'
 def calculate_count(df, attribute):
+    if df[attribute].dtype == 'object' or pd.api.types.is_string_dtype(df[attribute]):
+       df[attribute] = df[attribute].str.replace(',', '').astype(int)
     return df.groupby('Year/Date')[attribute].count().reset_index()
 
 # conclusion correlation between two attributes
@@ -103,7 +109,7 @@ def plotting(merged_df, attr1, attr2, color1, color2, correlation_coefficient):
     ax2.set_ylabel(attr2, color=color2)
     ax2.plot(years, attribute2, label=attr2, color=color2, marker='o', linestyle='-')
     ax2.tick_params(axis='y', labelcolor=color2)
-    fig.suptitle(f'{attr1} vs. {attr2}\n{corr_conclusions(correlation_coefficient)}')
+    fig.suptitle(f'{attr1} vs. {attr2}\n{corr_conclusions(correlation_coefficient)}\n{correlation_coefficient:3f}')
     # plt.savefig(f'{attr1}_vs_{attr2}.png')
     output_dir = 'correlation-graphs'
     if not os.path.exists(output_dir):
@@ -124,8 +130,8 @@ df1 = pd.read_csv(path1, encoding='ISO-8859-1')
 df2 = pd.read_csv(path2, encoding='ISO-8859-1')
 
 # Rename columns
-df1.columns = change_column_header(df1.columns)
-df2.columns = change_column_header(df2.columns)
+df1.columns = change_column_header(df1.columns,date_pattern)
+df2.columns = change_column_header(df2.columns,date_pattern)
 
 # Check date and format to YYYY
 df1 = check_format_date_column(df1)
