@@ -141,24 +141,30 @@ df1 = pd.read_csv(
     "./Datasets_CU/state_crime.csv",
 )
 df2 = pd.read_csv(
-    "./datasets_CU_/Fuel_Consumption_2000-2022.csv",
+    "./datasets_CU_/world-education-data.csv",
 )
 # Rename columns
 df1.columns = change_column_header(df1.columns)
 df2.columns = change_column_header(df2.columns)
-df1.rename(columns={"Data.Rates.Property.All": "Property_Crime_Rate"}, inplace=True)
-df2.rename(columns={"FUEL CONSUMPTION": "Fuel Consumption"}, inplace=True)
+df1.rename(
+    columns={"Data.Totals.Property.Larceny": "Total_Property_Larceny_Crime"},
+    inplace=True,
+)
+df2.rename(
+    columns={"school_enrol_secondary_pct": "Secondary_School_Enrollment_Rate"},
+    inplace=True,
+)
 
 # Check date and format to YYYY
 df1 = check_format_date_column(df1)
 df2 = check_format_date_column(df2)
 
 # limit the time frame of both datasets
-df1 = df1[df1["Year/Date"] >= 2000]
-df1 = df1[df1["Year/Date"] <= 2020]
+# df1 = df1[df1["Year/Date"] >= 2000]
+# df1 = df1[df1["Year/Date"] <= 2020]
 
-df2 = df2[df2["Year/Date"] >= 2000]
-df2 = df2[df2["Year/Date"] <= 2020]
+# df2 = df2[df2["Year/Date"] >= 2000]
+# df2 = df2[df2["Year/Date"] <= 2020]
 
 print(df1.head())
 print(df2.head())

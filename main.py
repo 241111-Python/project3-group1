@@ -44,8 +44,9 @@ dataset_1 = pd.read_csv(
     "./Datasets_CU/state_crime.csv",
 )
 dataset_2 = pd.read_csv(
-    "./datasets_CU_/Fuel_Consumption_2000-2022.csv",
+    "./datasets_CU_/world-education-data.csv",
 )
+
 
 dataset_1 = dataset_1.drop(
     [
@@ -74,11 +75,8 @@ dataset_1 = dataset_1.drop(
 )
 dataset_2 = dataset_2.drop(
     [
-        "MAKE",
-        "MODEL",
-        "VEHICLE CLASS",
-        "TRANSMISSION",
-        "FUEL",
+        "country",
+        "country_code",
     ],
     axis=1,
 )
@@ -99,11 +97,17 @@ df1.dropna(inplace=True)
 df2.dropna(inplace=True)
 
 
-df1.rename(columns={"Data.Rates.Property.Burglary": "Burglary_Rate"}, inplace=True)
-# df2.rename(columns={"Total Sales Used": "Total_Sales_Used_Car"}, inplace=True)
+df1.rename(
+    columns={"Data.Totals.Property.Larceny": "Total_Property_Larceny_Crime"},
+    inplace=True,
+)
+df2.rename(
+    columns={"school_enrol_secondary_pct": "Secondary_School_Enrollment_Rate"},
+    inplace=True,
+)
 
-df1 = df1[df1["Year/Date"] >= 2000]
-df1 = df1[df1["Year/Date"] <= 2022]
+# df1 = df1[df1["Year/Date"] >= 2000]
+# df1 = df1[df1["Year/Date"] <= 2022]
 
 # df2 = df2[df2["Year/Date"] >= 2009]
 # df2 = df2[df2["Year/Date"] <= 2018]
@@ -116,4 +120,3 @@ correlation_matrix = merged_df.corr()
 sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
 plt.title("Correlation Matrix")
 plt.show()
-
