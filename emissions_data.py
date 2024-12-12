@@ -23,8 +23,6 @@ df_c = df_c[["Year", "State", "Data.Rates.Total.All"]]
 merged_df = pd.merge(df_e, df_c, on=["Year", "State"])
 
 # Get correlations
-# print(merged_df.corr(numeric_only=True))
-
 co2c = merged_df.groupby("State").corr(numeric_only=True)["CO2"]
 co2c = co2c.reset_index(level=[0, 1])
 co2c = (
@@ -33,6 +31,16 @@ co2c = (
     .reset_index(drop=True)
 )
 
+# Print to log
+with open("log.txt", "w+") as file:
+    file.write("Correlations between Total Crime Rate and CO2 Emissions Per Capita\n\n")
+    file.write(f"US Total:\n {merged_df.corr(numeric_only=True)}\n\n")
+
+    file.write(
+        co2c.rename(columns={"CO2": "Correlation"})[
+            ["State", "Correlation"]
+        ].to_string()
+    )
 
 # Setup plotting
 attr1 = "Data.Rates.Total.All"

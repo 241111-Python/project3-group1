@@ -1,0 +1,59 @@
+Correlations between Total Crime Rate and CO2 Emissions Per Capita
+
+US Total:
+                            CO2  Data.Rates.Total.All
+CO2                   1.000000             -0.115441
+Data.Rates.Total.All -0.115441              1.000000
+
+                   State  Correlation
+0                   Iowa    -0.493937
+1               Nebraska    -0.284025
+2                Vermont    -0.192408
+3                Montana    -0.145614
+4                 Alaska    -0.076764
+5                Wyoming    -0.061539
+6           South Dakota    -0.051792
+7              Wisconsin    -0.027415
+8           Rhode Island    -0.013141
+9           North Dakota     0.068710
+10              Missouri     0.069553
+11         New Hampshire     0.103692
+12                 Maine     0.151368
+13              Illinois     0.196362
+14             Minnesota     0.200160
+15              Kentucky     0.203198
+16               Alabama     0.216385
+17           Mississippi     0.292435
+18                Oregon     0.328911
+19                 Idaho     0.330922
+20        North Carolina     0.357411
+21  District of Columbia     0.363334
+22             Louisiana     0.391824
+23             Tennessee     0.427935
+24              Oklahoma     0.447734
+25           Connecticut     0.486658
+26          Pennsylvania     0.492342
+27              Virginia     0.497701
+28              Colorado     0.530606
+29               Indiana     0.534377
+30            New Mexico     0.541516
+31        South Carolina     0.548419
+32              Arkansas     0.575960
+33                  Utah     0.584315
+34         West Virginia     0.589524
+35              New York     0.600818
+36            New Jersey     0.603720
+37                Hawaii     0.616476
+38                 Texas     0.629582
+39               Florida     0.639493
+40                  Ohio     0.662052
+41              Maryland     0.662772
+42              Michigan     0.665574
+43               Arizona     0.695150
+44         Massachusetts     0.709024
+45               Georgia     0.749243
+46                Kansas     0.752052
+47              Delaware     0.761585
+48            Washington     0.764676
+49            California     0.816526
+50                Nevada     0.889064
