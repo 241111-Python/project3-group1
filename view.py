@@ -93,6 +93,8 @@ merged_df = pd.merge(df1_to_merge, df2_to_merge, on="Year/Date", how="outer")
 #filling to 0
 merged_df.fillna(0, inplace=True)
 
+
+
 correlation_coefficient = merged_df["Brad Pitt"].corr(merged_df["net_migration"])
 # correlation2 = merged_df[['Brad Pitt', 'net_migration']].corr()
 # print(correlation)
