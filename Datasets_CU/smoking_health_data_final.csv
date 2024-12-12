@@ -1,4 +1,4 @@
-age,sex,current_smoker,heart_rate,blood_pressure,cigs_per_day,chol
+Age,sex,current_smoker,heart_rate,blood_pressure,cigs_per_day,chol
 54,male,yes,95,110/72,,219
 45,male,yes,64,121/72,,248
 58,male,yes,81,127.5/76,,235
