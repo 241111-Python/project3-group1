@@ -1,17 +1,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sn
+from library import load_crime_df
 
-# Load and preprocess data
 df = pd.read_csv("Datasets_Crime/state_crime.csv", usecols=["State", "Year", "Data.Rates.Property.All", "Data.Rates.Violent.All"])
+df2 = pd.read_csv("Datasets_DF/vgsales.csv")
+
+df2 = df2[(df2["Year"] <= 2014)].groupby("Year", as_index=False)["NA_Sales"].sum()
+
 df = df[df["State"] == "United States"]
-df2 = pd.read_csv("Datasets_DF/broadband-penetration-by-country.csv")
-df2 = df2[df2["Code"] == "USA"]
 
-# Merge and clean data
 merged = df.merge(df2, how="inner", on="Year")
-merged.rename(columns=lambda x: x.strip(), inplace=True)
-
 print(merged)
 
 # Create the figure and first y-axis
@@ -27,24 +26,21 @@ ax1.legend(loc="upper left")
 
 # Create the second y-axis
 ax2 = ax1.twinx()
-ax2.plot(merged["Year"], merged["Fixed broadband subscriptions (per 100 people)"], label="Broadband Subscriptions (per 100 people)", color="green", marker="o")
-ax2.set_ylabel("Broadband Subscriptions (per 100 people)", fontsize=12)
+ax2.plot(merged["Year"], merged["NA_Sales"], label="Video Games Sold in NA (in millions of copies sold)", color="green", marker="o")
+ax2.set_ylabel("Broadband Subscriptions", fontsize=12)
 ax2.tick_params(axis="y", labelcolor="green")
 ax2.legend(loc="upper right")
 
 # Add title and grid
-plt.title("Crime Rates and Broadband Subscriptions Over Time", fontsize=14)
+plt.title("US Crime Rates and NA Games Sales Over Time", fontsize=14)
 ax1.grid(True, linestyle="--", alpha=0.7)
 
-# Show the plot
-plt.tight_layout()
 plt.show()
 
 corr = merged.corr(numeric_only=True)
 print(corr)
 
-plt.title("Crime Rates and Broadband Subscriptions Correlation", fontsize=14)
-dataplot = sn.heatmap(corr, cmap="YlGnBu", annot=True)
+sn.heatmap(corr, cmap="YlGnBu", annot=True)
+plt.title("Crime Rates and NA Games Sales Correlation", fontsize=14)
 plt.show()
-
 
