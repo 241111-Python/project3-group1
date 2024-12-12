@@ -1,0 +1,15 @@
+NASDAQ / Data.Rates.Total.All
+
+Top 5 negative:
+WABC: -0.97
+TRMK: -0.96
+WEYS: -0.95
+NTRS: -0.94
+KCLI: -0.93
+
+Top 5 positive:
+AAME: 0.26
+XCRA: 0.32
+RDI: 0.41
+FONR: 0.58
+USEG: 0.61

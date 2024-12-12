@@ -1,0 +1,15 @@
+NYSE / Data.Rates.Total.All
+
+Top 5 negative:
+HMC: -0.96
+GSK: -0.95
+PAI: -0.95
+GAM: -0.95
+OMC: -0.95
+
+Top 5 positive:
+SFE: -0.1
+LEE: 0.02
+JOB: 0.21
+SPB: 0.43
+HL: 0.74

@@ -23,7 +23,8 @@ args = parser.parse_args()
 
 figures = "correlation-graphs"
 stocks = os.path.join(*["Datasets_Stock", "sp500", "csv"])
-crime_rate = ["Data.Rates.Property.All", "Data.Rates.Violent.All"][1]
+crime_rates = ["Data.Rates.Property.All", "Data.Rates.Violent.All"]
+crime_rate = "Data.Rates.Total.All"
 
 if args.stocks:
     stocks = args.stocks
@@ -48,6 +49,9 @@ def get_data_corr(file):
     if n < 40:
         return None, None
 
+    # Combine crime rates
+    df_c["Data.Rates.Total.All"] = df_c[crime_rates[0]] + df_c[crime_rates[1]]
+
     # Merge
     merged_df = pd.merge(df_c, df_s, on="Year")
 
@@ -61,9 +65,7 @@ def get_data_corr(file):
 
 # Load datasets
 df_c = library.load_crime_df()
-
-min_corr = [10, None]
-max_corr = [-10, None]
+corrs = []
 
 for file in os.scandir(stocks):
     df, corr = get_data_corr(file)
@@ -71,12 +73,7 @@ for file in os.scandir(stocks):
     if corr is None:
         continue
 
-    if corr > max_corr[0]:
-        max_corr[0] = corr
-        max_corr[1] = file
-    if corr < min_corr[0]:
-        min_corr[0] = corr
-        min_corr[1] = file
+    corrs.append((corr, file))
 
 # Setup plotting
 attr1 = crime_rate
@@ -84,8 +81,9 @@ attr2 = "Adjusted Close"
 color1 = "Red"
 color2 = "Blue"
 type = ["P", "N"]
+corrs = sorted(corrs, key=lambda x: x[0])
 
-for n, i in enumerate([max_corr, min_corr]):
+for n, i in enumerate([corrs[-1], corrs[0]]):
 
     merged_df, correlation = get_data_corr(i[1])
 
@@ -111,3 +109,12 @@ for n, i in enumerate([max_corr, min_corr]):
     plt.savefig(
         os.path.join(figures, f"{type[n]}_{attr1}_vs_{stock_source}_{label2}.png")
     )
+
+# Print out all correlations
+with open(os.path.join(figures, f"info_{stock_source}.txt"), "w+") as file:
+    file.write(f"{stock_source} / {crime_rate}\n\nTop 5 negative:\n")
+    for c in corrs[:5]:
+        file.write(f"{c[1].name.split(".")[0]}: {round(c[0], 2)}\n")
+    file.write("\nTop 5 positive:\n")
+    for c in corrs[-5:]:
+        file.write(f"{c[1].name.split(".")[0]}: {round(c[0], 2)}\n")

@@ -1,0 +1,15 @@
+SP500 / Data.Rates.Total.All
+
+Top 5 negative:
+OMC: -0.95
+STT: -0.94
+NTRS: -0.94
+HST: -0.93
+SO: -0.93
+
+Top 5 positive:
+RF: -0.54
+C: -0.32
+AMD: -0.2
+CPICQ: 0.19
+CDE: 0.89
