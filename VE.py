@@ -184,16 +184,39 @@ print(df2_appl)
 #merge dataframes
 merged_df = pd.merge(df1_appl, df2_appl, on="Year/Date", how="outer")
 print(merged_df)
+
+
 #if by applying string value to change the column name and iteract in merged_df
 attribute1 = value1
 attribute2 = value2
 
 merged_df.fillna(0, inplace=True)
 print(merged_df)
+
+min_year_df1 = merged_df[merged_df[attribute1] != 0]["Year/Date"].min()
+max_year_df1 = merged_df[merged_df[attribute1] != 0]["Year/Date"].max()
+
+min_year_df2 = merged_df[merged_df[attribute2] != 0]["Year/Date"].min()
+max_year_df2 = merged_df[merged_df[attribute2] != 0]["Year/Date"].max()
+
+min_year = max(min_year_df1,min_year_df2)
+max_year = max(max_year_df1,max_year_df2)
+
+filtered_df = merged_df[
+    (merged_df["Year/Date"] >= min_year) & 
+    (merged_df["Year/Date"] <= max_year) 
+
+]
+
+print(filtered_df)
+
+
 # correlation
 correlation_coefficient = merged_df[attribute1].corr(merged_df[attribute2])
+correlation_coefficient2 = filtered_df[attribute1].corr(filtered_df[attribute2])
 
 # plotting
 print(f"\nCorrelation coefficient: {correlation_coefficient}")
 print(corr_conclusions(correlation_coefficient))
 plotting(merged_df, attribute1, attribute2, 'blue', 'red', correlation_coefficient)
+plotting(filtered_df, attribute1, attribute2, 'blue', 'red', correlation_coefficient2)
