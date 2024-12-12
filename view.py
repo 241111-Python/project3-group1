@@ -67,7 +67,7 @@ def count_string_data(df, group_col, value_col, string):
 
 # calculate average, grouped by 'Year/Date'
 def calculate_avg(df, attribute):
-    return df.groupby("Year/Date")[attribute].median().reset_index()
+    return df.groupby("Year/Date")[attribute].mean().reset_index()
 
 
 # calculate sum, grouped by 'Year/Date'
@@ -83,17 +83,23 @@ def calculate_count(df, attribute):
 # conclusion correlation between two attributes
 def corr_conclusions(correlation_coefficient):
     if correlation_coefficient > 0.7:
-        return "Strong positive correlation."
+        return f"Strong positive correlation.\n r = {round(correlation_coefficient, 2)}"
     elif 0.3 <= correlation_coefficient <= 0.7:
-        return "Moderate positive correlation."
+        return (
+            f"Moderate positive correlation.\n r = {round(correlation_coefficient, 2)}"
+        )
     elif 0 <= correlation_coefficient < 0.3:
-        return "Weak positive correlation."
+        return f"Weak positive correlation. \n r = {round(correlation_coefficient, 2)}"
     elif -0.3 <= correlation_coefficient < 0:
-        return "Weak negative correlation."
+        return f"Weak negative correlation. \n r = {round(correlation_coefficient, 2)}"
     elif -0.7 <= correlation_coefficient < -0.3:
-        return "Moderate negative correlation."
+        return (
+            f"Moderate negative correlation. \n r = {round(correlation_coefficient, 2)}"
+        )
     elif correlation_coefficient < -0.7:
-        return "Strong negative correlation."
+        return (
+            f"Strong negative correlation. \n r = {round(correlation_coefficient, 2)}"
+        )
     else:
         return "No discernible correlation."
 
@@ -135,24 +141,24 @@ df1 = pd.read_csv(
     "./Datasets_CU/state_crime.csv",
 )
 df2 = pd.read_csv(
-    "./datasets_CU_/MVA_Vehicle_Sales_Counts_by_Month_for_Calendar_Year_2002_through_December_2023.csv",
+    "./datasets_CU_/Fuel_Consumption_2000-2022.csv",
 )
 # Rename columns
 df1.columns = change_column_header(df1.columns)
 df2.columns = change_column_header(df2.columns)
-df1.rename(columns={"Data.Rates.Property.Burglary": "Burglary_Rate"}, inplace=True)
-df2.rename(columns={"Total Sales Used": "Total_Sales_Used_Car"}, inplace=True)
+df1.rename(columns={"Data.Rates.Property.All": "Property_Crime_Rate"}, inplace=True)
+df2.rename(columns={"FUEL CONSUMPTION": "Fuel Consumption"}, inplace=True)
 
 # Check date and format to YYYY
 df1 = check_format_date_column(df1)
 df2 = check_format_date_column(df2)
 
 # limit the time frame of both datasets
-df1 = df1[df1["Year/Date"] >= 2009]
-df1 = df1[df1["Year/Date"] <= 2018]
+df1 = df1[df1["Year/Date"] >= 2000]
+df1 = df1[df1["Year/Date"] <= 2020]
 
-df2 = df2[df2["Year/Date"] >= 2009]
-df2 = df2[df2["Year/Date"] <= 2018]
+df2 = df2[df2["Year/Date"] >= 2000]
+df2 = df2[df2["Year/Date"] <= 2020]
 
 print(df1.head())
 print(df2.head())
@@ -205,7 +211,7 @@ elif operation == "Count for numerical":
 print(df2_appl)
 
 # merge dataframes
-merged_df = pd.merge(df1_appl, df2_appl, on="Year/Date", how="outer")
+merged_df = pd.merge(df1_appl, df2_appl, on="Year/Date", how="inner")
 print(merged_df)
 # if by applying string value to change the column name and iteract in merged_df
 attribute1 = value1

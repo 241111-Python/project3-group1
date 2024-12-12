@@ -5,6 +5,7 @@ import os
 import seaborn as sns
 
 
+# convert date to year format
 def date_to_year_format(df, date_column):
     # df[date_column] = pd.to_datetime(df[date_column], format='%Y', errors='coerce')
 
@@ -22,9 +23,11 @@ def check_format_date_column(df):
     return df
 
 
+# re for find pattern
 date_patterns = re.compile(r"(date|year)", re.IGNORECASE)
 
 
+# rename date|year columns to 'Year/Date'
 def change_column_header(colomns):
     changed = []
     for item in colomns:
@@ -41,7 +44,7 @@ dataset_1 = pd.read_csv(
     "./Datasets_CU/state_crime.csv",
 )
 dataset_2 = pd.read_csv(
-    "./datasets_CU_/MVA_Vehicle_Sales_Counts_by_Month_for_Calendar_Year_2002_through_December_2023.csv",
+    "./datasets_CU_/Fuel_Consumption_2000-2022.csv",
 )
 
 dataset_1 = dataset_1.drop(
@@ -69,14 +72,21 @@ dataset_1 = dataset_1.drop(
     ],
     axis=1,
 )
-dataset_2 = dataset_2.drop(["Month "], axis=1)
+dataset_2 = dataset_2.drop(
+    [
+        "MAKE",
+        "MODEL",
+        "VEHICLE CLASS",
+        "TRANSMISSION",
+        "FUEL",
+    ],
+    axis=1,
+)
 
 # create two dataframe for both datasets
 df1 = pd.DataFrame(dataset_1)
 df2 = pd.DataFrame(dataset_2)
 
-df1.dropna(inplace=True)
-df2.dropna(inplace=True)
 # Rename columns
 df1.columns = change_column_header(df1.columns)
 df2.columns = change_column_header(df2.columns)
@@ -85,19 +95,25 @@ df2.columns = change_column_header(df2.columns)
 df1 = check_format_date_column(df1)
 df2 = check_format_date_column(df2)
 
-df1.rename(columns={"Data.Rates.Property.Burglary": "Burglary_Rate"}, inplace=True)
-df2.rename(columns={"Total Sales Used": "Total_Sales_Used_Car"}, inplace=True)
+df1.dropna(inplace=True)
+df2.dropna(inplace=True)
 
-# df1 = df1[df1["Year/Date"] >= 2009]
-# df1 = df1[df1["Year/Date"] <= 2018]
+
+df1.rename(columns={"Data.Rates.Property.Burglary": "Burglary_Rate"}, inplace=True)
+# df2.rename(columns={"Total Sales Used": "Total_Sales_Used_Car"}, inplace=True)
+
+df1 = df1[df1["Year/Date"] >= 2000]
+df1 = df1[df1["Year/Date"] <= 2022]
 
 # df2 = df2[df2["Year/Date"] >= 2009]
 # df2 = df2[df2["Year/Date"] <= 2018]
 
 merged_df = df1.merge(df2, "inner")
 merged_df = merged_df.groupby("Year/Date").mean()
+# print(merged_df)
 correlation_matrix = merged_df.corr()
 
 sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
 plt.title("Correlation Matrix")
 plt.show()
+
