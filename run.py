@@ -89,7 +89,6 @@ elif operation == "Count for numerical":
     df2_appl = calculate_count(df2, attribute2)
 
 print(df2_appl)
-
 #merge dataframes
 merged_df = pd.merge(df1_appl, df2_appl, on="Year/Date", how="outer")
 print(merged_df)
