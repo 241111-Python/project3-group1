@@ -31,3 +31,9 @@ This large-scale data analysis and visualization project leverages diverse datas
 [Internet Usage](https://www.kaggle.com/datasets/pavan9065/internet-usage)
 
 [US Election Dataset](https://www.kaggle.com/datasets/essarabi/ultimate-us-election-dataset)
+
+[Vehicle Sales Dataset](https://www.kaggle.com/datasets/adityakishor1/vehicle-sales-count-by-year-2002-2023)
+
+[Fuel Consumption Dataset](https://www.kaggle.com/datasets/ahmettyilmazz/fuel-consumption)
+
+[World Education Dataset](https://www.kaggle.com/datasets/bushraqurban/world-education-dataset)
