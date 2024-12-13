@@ -32,7 +32,7 @@ ax2.tick_params(axis="y", labelcolor="green")
 ax2.legend(loc="upper right")
 
 # Add title and grid
-plt.title("US Crime Rates and NA Games Sales Over Time", fontsize=14)
+plt.title("US Crime Rates and NA Games Sales Over Time\nr=-0.84 for violent crime\nr=-0.74 for property crime", fontsize=14)
 ax1.grid(True, linestyle="--", alpha=0.7)
 
 plt.show()

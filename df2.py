@@ -43,10 +43,33 @@ plt.show()
 dataplot = sn.heatmap(corr, cmap="YlGnBu", annot=True)
 plt.show()
 
-corr2 = merged[['Data.Rates.Violent.All', 'Data.Rates.Property.All', 'Election_Year']].corr()
-print(corr2)
-dataplot = sn.heatmap(corr2, cmap="YlGnBu", annot=True)
+import seaborn as sn
+import matplotlib.pyplot as plt
+
+# Calculate correlation matrix
+corr2 = merged[['Data.Rates.Violent.All', 'Data.Rates.Property.All', 'Election_Year', 'Winning_Party']].corr()
+
+# Create heatmap
+plt.figure(figsize=(8, 6))  # Adjust figure size as needed
+dataplot = sn.heatmap(
+    corr2,
+    cmap="YlGnBu",
+    annot=True,
+    fmt=".2f",
+    cbar=False,
+    xticklabels=corr2.columns,
+    yticklabels=corr2.columns
+)
+
+# Rotate axis labels for better visibility
+plt.xticks(rotation=45, ha="right", fontsize=10)
+plt.yticks(fontsize=10)
+
+# Display the plot
+plt.title("Correlation Heatmap", fontsize=14)
+plt.tight_layout()
 plt.show()
+
 
 plt.figure(figsize=(10, 6))
 

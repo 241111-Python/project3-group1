@@ -33,7 +33,7 @@ ax2.tick_params(axis="y", labelcolor="green")
 ax2.legend(loc="upper right")
 
 # Add title and grid
-plt.title("Crime Rates and Broadband Subscriptions Over Time", fontsize=14)
+plt.title("Crime Rates and Broadband Subscriptions Over Time\nr=-0.93 for violent crime and property crime", fontsize=14)
 ax1.grid(True, linestyle="--", alpha=0.7)
 
 # Show the plot
