@@ -15,7 +15,7 @@ path_to_crime_csv = os.path.join("Datasets_Crime", "state_crime.csv")
 def load_crime_df():
     df = pd.read_csv(path_to_crime_csv)
 
-def load_crime_df(include_states=False):
+def load_crime_df(include_states=False, usecols=None, index_col=None):
     """
     Returns the state_crime data as a DataFrame.
 
@@ -25,13 +25,14 @@ def load_crime_df(include_states=False):
     Returns:
         DataFrame: The loaded crime dataset.
     """
-    df = pd.read_csv(path_to_crime_csv)
+    df = pd.read_csv(path_to_crime_csv, usecols=usecols, index_col=index_col)
 
     # Drop states and only include aggregated data if not otherwise specified
-    if not include_states:
-        df = df[df["State"].str.contains("United States")].reset_index(drop=True)
-    else:
-        df = df[~df["State"].str.contains("United States")].reset_index(drop=True)
+    if "State" in df.columns:
+        if not include_states:
+            df = df[df["State"].str.contains("United States")].reset_index(drop=True)
+        else:
+            df = df[~df["State"].str.contains("United States")].reset_index(drop=True)
 
 
     return df
