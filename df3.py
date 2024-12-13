@@ -27,7 +27,7 @@ ax1.legend(loc="upper left")
 # Create the second y-axis
 ax2 = ax1.twinx()
 ax2.plot(merged["Year"], merged["NA_Sales"], label="Video Games Sold in NA (in millions of copies sold)", color="green", marker="o")
-ax2.set_ylabel("Broadband Subscriptions", fontsize=12)
+ax2.set_ylabel("Video Games Sold in NA (in millions of copies sold)", fontsize=12)
 ax2.tick_params(axis="y", labelcolor="green")
 ax2.legend(loc="upper right")
 
