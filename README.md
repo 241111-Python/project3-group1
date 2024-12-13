@@ -37,3 +37,7 @@ This large-scale data analysis and visualization project leverages diverse datas
 [Fuel Consumption Dataset](https://www.kaggle.com/datasets/ahmettyilmazz/fuel-consumption)
 
 [World Education Dataset](https://www.kaggle.com/datasets/bushraqurban/world-education-dataset)
+
+[Video Game Sales](https://www.kaggle.com/datasets/thedevastator/global-video-game-sales)
+
+[Internet Subscriptions](https://www.kaggle.com/datasets/pavan9065/internet-usage)
