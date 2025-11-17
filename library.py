@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import os
 
 
-VitEf
+#VitEf
 path_to_crime_csv = os.path.join("Datasets_Crime", "state_crime.csv")
 
 # To-Do: Can handle any necessary pre-processing here
 # or add arguments to return only crime rates or only counts, if useful
-def load_crime_df():
-    df = pd.read_csv(path_to_crime_csv)
+# def load_crime_df():
+#     df = pd.read_csv(path_to_crime_csv)
 
 def load_crime_df(include_states=False, usecols=None, index_col=None):
     """
